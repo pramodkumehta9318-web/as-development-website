@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Study Helper — Final</title>
+<style>
+    /* ---------- General ---------- */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+    }
+    h1 {
+        margin: 0;
+    }
+    /* ---------- Header ---------- */
+    header {
+        background-color: #1e1e1e;
+        padding: 20px 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    header h1 {
+        color: #00c8ff;
+    }
+    header p {
+        color: #aaa;
+        font-size: 14px;
+    }
+
+    /* ---------- Container ---------- */
+    .container {
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    /* ---------- Left & Right Panel ---------- */
+    .panel {
+        flex: 0 0 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .panel button {
+        padding: 15px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        background-color: #2978dc;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .panel button:hover {
+        background-color: #00c8ff;
+        color: #000;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    /* ---------- Main Area ---------- */
+    .main {
+        flex: 1;
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        padding: 20px;
+        min-height: 600px;
+        position: relative;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 2px solid #555;
+        background-color: #121212;
+        color: #fff;
+        font-size: 16px;
+    }
+    .input-field:focus {
+        border-color: #00c8ff;
+        outline: none;
+    }
+    textarea {
+        resize: vertical;
+        height: 300px;
+    }
+
+    .submit-btn {
+        background-color: #00c8ff;
+        color: #000;
+        font-weight: bold;
+        width: 150px;
+    }
+    .submit-btn:hover {
+        background-color: #2978dc;
+        color: #fff;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        background-color: #121212;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #555;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 10px;
+        font-size: 13px;
+        color: #777;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Smart Study Helper — Final</h1>
+    <p>Subject + Large Content input. ESC cancels any screen. BACKSPACE returns from results.</p>
+</header>
+
+<div class="container">
+    <!-- Left Panel -->
+    <div class="panel">
+        <button onclick="chooseTemplate('E-Mail')">E-Mail</button>
+        <button onclick="chooseTemplate('Application')">Application</button>
+        <button onclick="chooseTemplate('Formal Letter')">Formal Letter</button>
+        <button onclick="chooseTemplate('Article')">Article</button>
+        <button onclick="chooseTemplate('Notice')">Notice</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <input id="subject" class="input-field" type="text" placeholder="Enter Subject / Topic here">
+        <textarea id="content" class="input-field" placeholder="Enter content / body here. Press Submit when done."></textarea>
+        <button class="submit-btn" onclick="generateDocument()">Submit</button>
+        <pre id="result"></pre>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="panel">
+        <button onclick="addQuestionFlow()">Give Answer Questions</button>
+        <button onclick="startTest()">Start Test (A/B/C)</button>
+        <button onclick="exportQuestions()">Export Questions</button>
+    </div>
+</div>
+
+<div class="footer">
+    &copy; 2025 Ayu | Smart Study Helper — HTML Version
+</div>
+
+<script>
+    let chosenTemplate = '';
+    const resultArea = document.getElementById('result');
+
+    function chooseTemplate(template) {
+        chosenTemplate = template;
+        resultArea.textContent = `Template selected: ${template}`;
+    }
+
+    function generateDocument() {
+        const subj = document.getElementById('subject').value.trim();
+        const cont = document.getElementById('content').value.trim();
+        if (!subj) {
+            alert("Subject cannot be empty!");
+            return;
+        }
+        let doc = '';
+        switch(chosenTemplate) {
+            case 'E-Mail':
+                doc = `Subject: ${subj}\n\nDear Sir/Madam,\n\n${cont}\n\nKind regards,\nAyu`;
+                break;
+            case 'Application':
+                doc = `To,\nThe Principal,\n[School Name]\n\nSubject: ${subj}\n\nRespected Sir/Madam,\n\n${cont}\n\nYours obediently,\nAyu`;
+                break;
+            case 'Formal Letter':
+                doc = `To,\nConcerned Authority\n\nSubject: ${subj}\n\nSir/Madam,\n\n${cont}\n\nThanking you,\nAyu`;
+                break;
+            case 'Article':
+                doc = `ARTICLE: ${subj}\n\n${cont}\n\n(End of article)`;
+                break;
+            case 'Notice':
+                doc = `NOTICE\nDate: ${new Date().toLocaleDateString()}\n\nSubject: ${subj}\n\n${cont}\n\nBy order,\nAyu`;
+                break;
+            default:
+                doc = "Please select a template first!";
+        }
+        resultArea.textContent = doc;
+    }
+
+    function addQuestionFlow() {
+        alert("Question flow not implemented in HTML version yet. Use Python app for full features.");
+    }
+
+    function startTest() {
+        alert("Test flow not implemented in HTML version yet. Use Python app for full features.");
+    }
+
+    function exportQuestions() {
+        alert("Export function not implemented in HTML version yet. Use Python app for full features.");
+    }
+</script>
+
+</body>
+</html>
